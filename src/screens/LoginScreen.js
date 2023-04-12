@@ -1,13 +1,14 @@
 import { View, StyleSheet, KeyboardAvoidingView, TextInput, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import { auth } from '../../firebaseConfig';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const auth = getAuth();
     const navigation = useNavigation();
+
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -35,7 +36,6 @@ const LoginScreen = () => {
             })
             .catch(error => alert(error.message))
     }
-
     return (
         <KeyboardAvoidingView
             style={styles.container}
