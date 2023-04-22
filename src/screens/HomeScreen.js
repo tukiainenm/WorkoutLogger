@@ -1,53 +1,38 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
-import Header from '../components/Header'
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Button, Card } from 'react-native-paper';
+import ExerciseCard from '../components/ExerciseCard';
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
 
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        navigation.replace("Login")
-      })
-      .catch(error => alert(error.message))
-  }
+const HomeScreen = ({ navigation }) => {
+  const [showCard, setShowCard] = useState(false);
+
+
+  const openCard = () => {
+    setShowCard(!showCard);
+  };
 
   return (
-    <View style={styles.container}>
-      <Text>Logged in as: {auth.currentUser?.email}</Text>
-      <TouchableOpacity
-        onPress={handleSignOut}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity>
+    <View>
+      <View style={styles.buttonContainer}>
+        <Button mode="contained" onPress={openCard}>Add Workout</Button>
+        <Button mode="contained" onPress={() => navigation.navigate('Search')}>Search Exercises</Button>
+      </View>
+      {showCard && (
+        <ExerciseCard />
+      )}
     </View>
-  )
+  );
 }
 
-export default HomeScreen
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-   button: {
-    backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
-    borderRadius: 10,
+  buttonContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 40,
+    justifyContent: 'space-evenly',
+    padding: 10
   },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-})
+});
+
+export default HomeScreen

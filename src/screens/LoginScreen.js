@@ -1,4 +1,5 @@
-import { View, StyleSheet, KeyboardAvoidingView, TextInput, Text, TouchableOpacity } from 'react-native';
+import { Button, TextInput, Provider as PaperProvider, Text } from 'react-native-paper';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +14,7 @@ const LoginScreen = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                navigation.navigate("Home")
+                navigation.navigate("WorkoutLogger")
             }
         })
         return unsubscribe
@@ -23,7 +24,7 @@ const LoginScreen = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                console.log("Registered as:",user.email);
+                console.log("Registered as:", user.email);
             })
             .catch(error => alert(error.message))
     }
@@ -37,40 +38,42 @@ const LoginScreen = () => {
             .catch(error => alert(error.message))
     }
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior='height'
-        >
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Email'
-                    onChangeText={text => setEmail(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder='Password'
-                    onChangeText={text => setPassword(text)}
-                    secureTextEntry
-                />
-            </View>
+        <PaperProvider>
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior='height'
+            >
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Email'
+                        onChangeText={text => setEmail(text)}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Password'
+                        onChangeText={text => setPassword(text)}
+                        secureTextEntry
+                    />
+                </View>
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleLogin}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        onPress={handleLogin}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Login</Text>
+                    </Button>
 
-                <TouchableOpacity
-                    onPress={handleSignUp}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+                    <Button
+                        onPress={handleSignUp}
+                        style={[styles.button, styles.buttonOutline]}
+                    >
+                        <Text style={styles.buttonOutlineText}>Sign Up</Text>
+                    </Button>
+                </View>
+            </KeyboardAvoidingView>
+        </PaperProvider>
     )
 }
 
