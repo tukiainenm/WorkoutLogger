@@ -19,7 +19,7 @@ export const CombinedDarkTheme = merge(MD2DarkTheme, NavigationDarkTheme);
 
 export default function App() {
   return (
-    <PaperProvider theme={CombinedDarkTheme}>
+    <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login"
           screenOptions={{

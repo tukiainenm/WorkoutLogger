@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
 import { Button, Searchbar } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
 import { options } from '../../utils'
-import { Dimensions } from 'react-native'
 
 const SearchScreen = () => {
   const [query, setQuery] = useState('')
   const [exercises, setExercises] = useState([])
+  const [filteredExercises, setFilteredExercises] = useState([])
 
   useEffect(() => {
     fetch('https://exercisedb.p.rapidapi.com/exercises/', options)
@@ -20,8 +20,12 @@ const SearchScreen = () => {
   const searchExercises = () => {
     const filteredData = exercises.filter(item =>
       item.name.toLowerCase().includes(query.toLowerCase())
-      );
-      console.warn(filteredData)
+    );
+    setFilteredExercises(filteredData);
+  }
+
+  const renderItem = ({ item }) => {
+    return <Text>{item.name}</Text>
   }
 
   return (
@@ -31,8 +35,12 @@ const SearchScreen = () => {
         onChangeText={text => setQuery(text)}
         value={query}
         onIconPress={searchExercises}
-      ></Searchbar>
-      <Text>{query}</Text>
+      />
+      <FlatList
+      data={filteredExercises}
+      renderItem={renderItem}
+      keyExtractor={item => item.id}
+      />
     </View>
   )
 }
