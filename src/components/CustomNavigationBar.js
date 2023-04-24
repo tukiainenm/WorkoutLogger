@@ -11,7 +11,6 @@ const CustomNavigationBar = ({ navigation, route, options }) => {
             {showBackButton ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
             <Appbar.Content
                 title={title}
-                style={{alignItems: 'center'}}
                 />
         </Appbar.Header>
     );

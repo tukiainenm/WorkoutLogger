@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
-import { Button, Searchbar } from 'react-native-paper'
+import { View, Text, StyleSheet, ScrollView, FlatList, Image } from 'react-native'
+import { Button, Card, Divider, Searchbar } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
 import { options } from '../../utils'
 
@@ -25,21 +25,30 @@ const SearchScreen = () => {
   }
 
   const renderItem = ({ item }) => {
-    return <Text>{item.name}</Text>
+    return (
+      <Card>
+        <Card.Content>
+          <Text style={styles.cardText}>Name: {item.name}</Text>
+          <Text style={styles.cardText}>Target: {item.target}</Text>
+          <Text style={styles.cardText}>Equipment: {item.equipment}</Text>
+        </Card.Content>
+      </Card>
+    )
   }
 
   return (
     <View style={styles.container}>
       <Searchbar
-        placeholder='Search Exercises'
+        placeholder='e.g. biceps, back...'
         onChangeText={text => setQuery(text)}
         value={query}
         onIconPress={searchExercises}
       />
       <FlatList
-      data={filteredExercises}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
+        data={filteredExercises}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        style={{marginBottom:25}}
       />
     </View>
   )
@@ -52,5 +61,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  cardText: {
+    fontWeight: 'bold'
   }
 })

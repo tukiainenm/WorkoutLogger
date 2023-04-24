@@ -2,13 +2,12 @@ import { Button, TextInput, Provider as PaperProvider, Text } from 'react-native
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigation } from '@react-navigation/native';
 import { auth } from '../../firebaseConfig';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigation = useNavigation();
+    //const navigation = useNavigation();
 
 
     useEffect(() => {
@@ -37,6 +36,7 @@ const LoginScreen = () => {
             })
             .catch(error => alert(error.message))
     }
+
     return (
         <PaperProvider>
             <KeyboardAvoidingView

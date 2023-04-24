@@ -1,62 +1,75 @@
 import React, { useState } from 'react'
 import { Card, Button, TextInput } from 'react-native-paper'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { auth, database } from '../../firebaseConfig'
 import { ref, push } from 'firebase/database'
 
 
 const ExerciseCard = () => {
-    const [exercises, setExercises] = useState([])
-    const [exerciseName, setExerciseName] = useState('')
-    const [sets, setSets] = useState('')
-    const [reps, setReps] = useState('')
-    const [weight, setWeight] = useState('')
+    const [workout, setWorkout] = useState([{
+        name: '', sets: '', reps: '', weight: ''
+    }]);
 
-    const addExercises = () => {
-        setExercises([...exercises, { exerciseName, sets, reps, weight }])
+    const addWorkout = () => {
+        setWorkout([...workout, { name: '', sets: '', reps: '', weight: '' }])
     }
 
     const saveExercise = () => {
         const userId = auth.currentUser.uid;
         push(
-            ref(database, `users/${userId}/Workouts`),
-            {'exercises': exerciseName, sets, reps, weight});
+            ref(database, `users/${userId}/`),
+            { workout });
     }
+
+    const handleExerciseChange = (text, index, attribute) => {
+        const updatedWorkouts = [...workout];
+        updatedWorkouts[index][attribute] = text;
+        setWorkout(updatedWorkouts);
+    };
 
 
     return (
         <Card>
             <Card.Title title="Add a workout" />
             <Card.Content>
-                <View style={styles.contentContainer}>
-                    <TextInput
-                        label='Exercise'
-                        value={exerciseName}
-                        onChangeText={text => setExerciseName(text)}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        label='Sets'
-                        value={sets}
-                        onChangeText={text => setSets(text)}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        label='Reps'
-                        value={reps}
-                        onChangeText={text => setReps(text)}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        label='Weight'
-                        value={weight}
-                        onChangeText={text => setWeight(text)}
-                        style={styles.input}
-                    />
-                </View>
+                {workout.map((exercise, index) =>
+                    <View style={styles.contentContainer} key={index}>
+                        <TextInput
+                            placeholder="Exercise name"
+                            value={exercise.name}
+                            onChangeText={(text) =>
+                                handleExerciseChange(text, index, 'name')
+                            }
+                        />
+                        <TextInput
+                            placeholder="Sets"
+                            value={exercise.sets}
+                            onChangeText={(text) =>
+                                handleExerciseChange(text, index, 'sets')
+                            }
+                            keyboardType="numeric"
+                        />
+                        <TextInput
+                            placeholder="Reps"
+                            value={exercise.reps}
+                            onChangeText={(text) =>
+                                handleExerciseChange(text, index, 'reps')
+                            }
+                            keyboardType="numeric"
+                        />
+                        <TextInput
+                            placeholder="Weight"
+                            value={exercise.weight}
+                            onChangeText={(text) =>
+                                handleExerciseChange(text, index, 'weight')
+                            }
+                            keyboardType="numeric"
+                        />
+                    </View>
+                )}
             </Card.Content>
             <Card.Actions>
-                <Button onPress={addExercises} mode='elevated'>Add</Button>
+                <Button onPress={addWorkout} mode='contained'>Add move</Button>
                 <Button onPress={saveExercise} mode='contained'>Save</Button>
             </Card.Actions>
         </Card>
