@@ -22,7 +22,7 @@ const ExerciseCard = ({ showModal, isModalVisible }) => {
 
     return (
         <View style={styles.container}>
-            <Modal visible={isModalVisible} transparent={false} animationType='fade'>
+            <Modal visible={isModalVisible} transparent={true} animationType='fade'>
                 <View style={styles.modalContainer}>
                     <View style={styles.card}>
                         <TextInput
