@@ -7,6 +7,7 @@ const SearchScreen = () => {
   const [query, setQuery] = useState('')
   const [exercises, setExercises] = useState([])
   const [filteredExercises, setFilteredExercises] = useState([])
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     fetch('https://exercisedb.p.rapidapi.com/exercises/', options)
@@ -19,9 +20,13 @@ const SearchScreen = () => {
 
   const searchExercises = () => {
     const filteredData = exercises.filter(item =>
-      item.name.toLowerCase().includes(query.toLowerCase())
+      item.target.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredExercises(filteredData);
+  }
+
+  const LoadMore = () => {
+    setLimit(limit + 5)
   }
 
   const renderItem = ({ item }) => {
@@ -45,11 +50,17 @@ const SearchScreen = () => {
         onIconPress={searchExercises}
       />
       <FlatList
-        data={filteredExercises}
+        data={filteredExercises.slice(0, limit)}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        style={{marginBottom:25}}
+        initialNumToRender={5}
+        onEndReached={LoadMore}
+        onEndReachedThreshold={0.3}
+        contentContainerStyle={styles.dippaContainer}
       />
+      {filteredExercises.length > limit && (
+        <Button mode='contained' title='Load More' onPress={LoadMore} />
+      )}
     </View>
   )
 }
@@ -64,5 +75,12 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontWeight: 'bold'
+  },
+  dippaContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    paddingBottom: 40
   }
 })

@@ -1,19 +1,19 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button, Text, Card } from 'react-native-paper';
-import ExerciseCard from '../components/ExerciseCard';
+import ExerciseCard from '../components/AddExercises/ExerciseCard';
 import { auth, database } from '../../firebaseConfig';
 import { onValue, ref, remove } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 
 
 const HomeScreen = ({ navigation }) => {
-  const [showCard, setShowCard] = useState(false);
-  const [workouts, setWorkouts] = useState([])
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [activities, setActivities] = useState([])
 
 
-  const openCard = () => {
-    setShowCard(!showCard);
+  const showCard = () => {
+    setIsModalVisible(!isModalVisible);
   };
 
   const handleSignOut = () => {
@@ -26,48 +26,51 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const userId = auth.currentUser.uid;
-    const itemsRef = ref(database, `users/${userId}/`);
+    const itemsRef = ref(database, `users/${userId}/Activities`);
     onValue(itemsRef, (snapshot) => {
       const data = snapshot.val();
-      setWorkouts(Object.values(data));
+      setActivities(Object.values(data));
     })
   }, []);
 
-  const deleteWorkout = () => {
+  const deleteActivity = () => {
     const userId = auth.currentUser.uid;
     remove(
-        ref(database, `users/${userId}/workout`),
-    )
-}
+      ref(database, `users/${userId}/Activities/`),
+        {activities})
+    }
 
   const renderItem = ({ item }) => {
-    return ( 
-      <Card mode='elevated'>
-        <Card.Content style={{flexDirection: 'row'}}>
-          <Text>{item.name}, </Text>
-          <Text>{item.sets}x{item.reps}, </Text>
-          <Text>{item.weight} Kg</Text>
-        </Card.Content>
-      </Card>
-  )}
+    return (
+    <Card mode="contained">
+      <Card.Content>
+        <Text>{item.activity}</Text>
+        <Text>{item.duration}</Text>
+        <Text>{item.date}</Text>
+        <Button onPress={deleteActivity}>Delete</Button>
+      </Card.Content>
+    </Card>
+    )
+  }
 
   return (
     <View>
       <View style={styles.buttonContainer}>
-        <Button mode="contained" onPress={openCard}>Add Workout</Button>
+        <Button mode="contained" onPress={showCard}>Add Workout</Button>
         <Button mode="contained" onPress={() => navigation.navigate('Search')}>Search Exercises</Button>
         <Button mode="contained" onPress={handleSignOut}>Sign Out</Button>
-        <Button mode="contained" onPress={deleteWorkout}>Del</Button>
       </View>
-      <View style={{position:'relative'}}>
       {showCard && (
-        <ExerciseCard />
+        <ExerciseCard
+         isModalVisible={isModalVisible}
+         showCard={showCard}
+         />
       )}
-      </View>
       <FlatList
-      data={workouts}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
+        data={activities}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        
       />
     </View>
   );

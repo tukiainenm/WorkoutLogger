@@ -5,6 +5,7 @@ import {
 }
   from '@react-navigation/native';
 import { MD2DarkTheme, MD2LightTheme } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import merge from 'deepmerge'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
@@ -19,17 +20,19 @@ export const CombinedDarkTheme = merge(MD2DarkTheme, NavigationDarkTheme);
 
 export default function App() {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login"
-          screenOptions={{
-            header: (props) => <CustomNavigationBar {...props} />
-          }}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="WorkoutLogger" component={HomeScreen} />
-          <Stack.Screen name="Search" component={SearchScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <SafeAreaView style={{flex: 1}}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login"
+            screenOptions={{
+              header: (props) => <CustomNavigationBar {...props} />
+            }}>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="WorkoutLogger" component={HomeScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </SafeAreaView>
   );
 }
