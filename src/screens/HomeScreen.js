@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Text, Card } from 'react-native-paper';
 import ExerciseCard from '../components/AddExercises/ExerciseCard';
 import { auth, database } from '../../firebaseConfig';
-import { onValue, ref, remove } from 'firebase/database';
+import { child, onValue, ref, remove, } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 
 
@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const userId = auth.currentUser.uid;
-    const itemsRef = ref(database, `users/${userId}/Activities`);
+    const itemsRef = ref(database, `users/${userId}/activities`);
     onValue(itemsRef, (snapshot) => {
       const data = snapshot.val();
       setActivities(Object.values(data));
@@ -36,15 +36,15 @@ const HomeScreen = ({ navigation }) => {
   const deleteActivity = () => {
     const userId = auth.currentUser.uid;
     remove(
-      ref(database, `users/${userId}/Activities/`),
-        {activities})
+      ref(database, `users/${userId}/activities/`),
+      )
     }
 
   const renderItem = ({ item }) => {
     return (
-    <Card mode="contained">
+    <Card mode="contained" style={styles.cardContainer}>
       <Card.Content>
-        <Text>{item.activity}</Text>
+        <Text>{item.activityName}</Text>
         <Text>{item.duration}</Text>
         <Text>{item.date}</Text>
         <Button onPress={deleteActivity}>Delete</Button>
@@ -70,7 +70,7 @@ const HomeScreen = ({ navigation }) => {
         data={activities}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        
+        ItemSeparatorComponent={() => <View syle={{height: 10}} />}
       />
     </View>
   );
@@ -86,4 +86,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     padding: 10
   },
+  flatListContainer: {
+    justifyContent: 'space-around',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  cardContainer: {
+    marginVertical: 8,
+    marginHorizontal: 16
+  }
 });

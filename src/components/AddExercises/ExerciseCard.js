@@ -14,14 +14,15 @@ const ExerciseCard = ({ showModal, isModalVisible }) => {
 
     const saveActivity = () => {
         push(
-            ref(database, `users/${userId}/Activities`),
-            { 'activity': activityName, duration, date })
+            ref(database, `users/${userId}/activities`),
+            { activityName, duration, date })
+        showModal();
     }
 
 
     return (
         <View style={styles.container}>
-            <Modal visible={isModalVisible} transparent={true} animationType='fade'>
+            <Modal visible={isModalVisible} transparent={false} animationType='fade'>
                 <View style={styles.modalContainer}>
                     <View style={styles.card}>
                         <TextInput
@@ -46,7 +47,7 @@ const ExerciseCard = ({ showModal, isModalVisible }) => {
                         <TouchableOpacity onPress={showModal}>
                             <Text>Close</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={saveActivity}>
+                        <TouchableOpacity onPress={saveActivity} >
                             <Text>Save</Text>
                         </TouchableOpacity>
                     </View>
