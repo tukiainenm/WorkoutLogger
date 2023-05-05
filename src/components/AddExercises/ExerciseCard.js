@@ -5,7 +5,7 @@ import { auth, database } from '../../../firebaseConfig'
 import { ref, push, set } from 'firebase/database'
 
 
-const ExerciseCard = ({ showCard, isModalVisible }) => {
+const ExerciseCard = ({ showModal, isModalVisible }) => {
     const [activityName, setActivityName] = useState('')
     const [duration, setDuration] = useState('')
     const [date, setDate] = useState('')
@@ -43,7 +43,7 @@ const ExerciseCard = ({ showCard, isModalVisible }) => {
                             onChangeText={text => setDate(text)}
                             style={styles.textInput}
                         />
-                        <TouchableOpacity onPress={showCard}>
+                        <TouchableOpacity onPress={showModal}>
                             <Text>Close</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={saveActivity}>

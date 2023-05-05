@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
   const [activities, setActivities] = useState([])
 
 
-  const showCard = () => {
+  const showModal = () => {
     setIsModalVisible(!isModalVisible);
   };
 
@@ -56,14 +56,14 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <View style={styles.buttonContainer}>
-        <Button mode="contained" onPress={showCard}>Add Workout</Button>
+        <Button mode="contained" onPress={showModal}>Add Activity</Button>
         <Button mode="contained" onPress={() => navigation.navigate('Search')}>Search Exercises</Button>
         <Button mode="contained" onPress={handleSignOut}>Sign Out</Button>
       </View>
-      {showCard && (
+      {showModal && (
         <ExerciseCard
          isModalVisible={isModalVisible}
-         showCard={showCard}
+         showModal={showModal}
          />
       )}
       <FlatList
