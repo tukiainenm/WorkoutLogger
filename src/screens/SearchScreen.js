@@ -31,7 +31,7 @@ const SearchScreen = () => {
 
   const renderItem = ({ item }) => {
     return (
-      <Card>
+      <Card style={styles.cardContainer}>
         <Card.Content>
           <Text style={styles.cardText}>Name: {item.name}</Text>
           <Text style={styles.cardText}>Target: {item.target}</Text>
@@ -56,7 +56,6 @@ const SearchScreen = () => {
         initialNumToRender={5}
         onEndReached={LoadMore}
         onEndReachedThreshold={0.3}
-        contentContainerStyle={styles.dippaContainer}
       />
       {filteredExercises.length > limit && (
         <Button mode='contained' title='Load More' onPress={LoadMore} />
@@ -82,5 +81,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
     paddingBottom: 40
+  },
+  cardContainer: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+    flex: 1
   }
 })
