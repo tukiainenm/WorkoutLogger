@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native'
-import { Card, Searchbar } from 'react-native-paper'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Image } from 'react-native'
+import { Card, Searchbar, Button } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
 import { API_URL, API_OPTIONS } from '../../utils'
 import SearchDetailModal from '../components/SearchExercises/SearchDetailModal'
@@ -9,8 +9,9 @@ const SearchScreen = () => {
   const [query, setQuery] = useState('')
   const [exercises, setExercises] = useState([])
   const [filteredExercises, setFilteredExercises] = useState([])
-  const [limit, setLimit] = useState(9);
+  const [limit, setLimit] = useState(12);
   const [selectedExercise, setSelectedExercise] = useState(null);
+  const [endReached, setEndReached] = useState(false)
 
   useEffect(() => {
     fetch(`${API_URL}`, API_OPTIONS)
@@ -74,8 +75,8 @@ const SearchScreen = () => {
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
         initialNumToRender={limit}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
+        onEndReached={!setEndReached}
+        onEndReachedThreshold={0.5}
         style={styles.flatList}
       />
     </View>
@@ -99,6 +100,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   flatList: {
-    marginBottom: 10
+    marginBottom: 25
   }
 })

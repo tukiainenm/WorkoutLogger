@@ -70,6 +70,7 @@ const HomeScreen = ({ navigation }) => {
         data={activities}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        inverted={true}
       />
     </View>
   );

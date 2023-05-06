@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native'
+
 import React from 'react'
 
 const SearchDetailModal = ({ isDetailModalVisible, selectedExercise, hideDetailModal }) => {
@@ -12,6 +13,9 @@ const SearchDetailModal = ({ isDetailModalVisible, selectedExercise, hideDetailM
                                 <Text>Name: {selectedExercise.name}</Text>
                                 <Text>Target: {selectedExercise.target}</Text>
                                 <Text>Equipment: {selectedExercise.equipment}</Text>
+                                <View style={styles.gifContainer}>
+                                    <Image style={styles.gif} source={{ uri: selectedExercise.gifUrl }} />
+                                </View>
                             </>
                         )}
                         <TouchableOpacity onPress={hideDetailModal}>
@@ -63,5 +67,16 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 8,
         marginBottom: 16,
+    },
+    gifContainer: {
+        width: '70%',
+        height: 185,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    gif: {
+        width: '80%',
+        height: '80%',
+        padding: 10
     },
 });
