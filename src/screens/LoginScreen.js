@@ -7,8 +7,6 @@ import { auth } from '../../firebaseConfig';
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    //const navigation = useNavigation();
-
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -25,7 +23,7 @@ const LoginScreen = ({ navigation }) => {
                 const user = userCredentials.user;
                 console.log("Registered as:", user.email);
             })
-            .catch(error => alert(error.message))
+            .catch(error => console.error(error))
     }
 
     const handleLogin = () => {
@@ -34,46 +32,42 @@ const LoginScreen = ({ navigation }) => {
                 const user = userCredentials.user;
                 console.log("Logged in as:", user.email);
             })
-            .catch(error => alert(error.message))
+            .catch(error => console.error(error))
     }
 
     return (
-        <PaperProvider>
-            <KeyboardAvoidingView
-                style={styles.container}
-                behavior='height'
-            >
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Email'
-                        onChangeText={text => setEmail(text)}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Password'
-                        onChangeText={text => setPassword(text)}
-                        secureTextEntry
-                    />
-                </View>
-
-                <View style={styles.buttonContainer}>
-                    <Button
-                        onPress={handleLogin}
-                        style={styles.button}
-                    >
-                        <Text style={styles.buttonText}>Login</Text>
-                    </Button>
-
-                    <Button
-                        onPress={handleSignUp}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text style={styles.buttonOutlineText}>Sign Up</Text>
-                    </Button>
-                </View>
-            </KeyboardAvoidingView>
-        </PaperProvider>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior='height'
+        >
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.input}
+                    placeholder='Email'
+                    onChangeText={text => setEmail(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder='Password'
+                    onChangeText={text => setPassword(text)}
+                    secureTextEntry
+                />
+            </View>
+            <View style={styles.buttonContainer}>
+                <Button
+                    mode='contained'
+                    onPress={handleLogin}
+                >
+                    <Text>Login</Text>
+                </Button>
+                <Button
+                    mode='contained'
+                    onPress={handleSignUp}
+                >
+                    <Text>Sign Up</Text>
+                </Button>
+            </View>
+        </KeyboardAvoidingView>
     )
 }
 

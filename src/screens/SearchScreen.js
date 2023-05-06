@@ -1,15 +1,16 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native'
-import { Button, Card, Searchbar } from 'react-native-paper'
+import { Card, Searchbar } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
 import { API_URL, API_OPTIONS } from '../../utils'
+import SearchDetailModal from '../components/SearchExercises/SearchDetailModal'
 
 
 const SearchScreen = () => {
   const [query, setQuery] = useState('')
   const [exercises, setExercises] = useState([])
   const [filteredExercises, setFilteredExercises] = useState([])
-  const [limit, setLimit] = useState(10);
-  const [showDetails, setShowDetails] = useState(false)
+  const [limit, setLimit] = useState(9);
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
   useEffect(() => {
     fetch(`${API_URL}`, API_OPTIONS)
@@ -31,13 +32,18 @@ const SearchScreen = () => {
     setLimit(limit + 5)
   }
 
-  const openDetails = () => {
-    setShowDetails(!showDetails)
-  }
+  const showDetailModal = (item) => {
+    setSelectedExercise(item);
+  };
 
+  const hideDetailModal = () => {
+    setSelectedExercise(null);
+  };
+
+  
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={openDetails}>
+      <TouchableOpacity onPress={() => showDetailModal(item)}>
         <Card style={styles.cardContainer}>
           <Card.Content style={{ alignItems: 'center' }}>
             <Text style={styles.cardText}>{item.name}</Text>
@@ -46,7 +52,7 @@ const SearchScreen = () => {
       </TouchableOpacity>
     )
   }
-
+  
   return (
     <View style={styles.container}>
       <Searchbar
@@ -56,16 +62,18 @@ const SearchScreen = () => {
         onIconPress={searchExercises}
         onSubmitEditing={searchExercises}
       />
-      {showDetails && (
-        <Modal transparent={true} >
-          <Text>Ju</Text>
-        </Modal>
+      {showDetailModal && (
+        <SearchDetailModal
+        isDetailModalVisible={!!selectedExercise}
+        selectedExercise={selectedExercise}
+        hideDetailModal={hideDetailModal}
+        />
       )}
       <FlatList
         data={filteredExercises.slice(0, limit)}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
-        initialNumToRender={5}
+        keyExtractor={item => item.id.toString()}
+        initialNumToRender={limit}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
         style={styles.flatList}

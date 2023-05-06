@@ -11,8 +11,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <PaperProvider>
+    <PaperProvider>
+      
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login"
             screenOptions={{
@@ -23,7 +23,7 @@ export default function App() {
             <Stack.Screen name="Search" component={SearchScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-      </PaperProvider>
-    </SafeAreaView>
+      
+    </PaperProvider>
   );
 }
