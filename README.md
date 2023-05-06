@@ -15,6 +15,6 @@ Opening the app you are greeted with a "Login"-page, from where you can login to
 
 On the app's homepage you can log activities you've completed. The "Add Activity"-button opens a card, in which are input fields for the activity's name, duration and date. When you're ready, you can press the "Save"-button, which is also in the card, which then saves the activity to Firebase. The saved activities are displayed on the apps homepage.
 
-In the "Search"-tab of the app you can search for certain exercises using keywords like biceps, triceps or back for example. Exercises containing the keyword will then be displayed on the screen as cards and you can then click the cards to open a more detailed view of the exercises.
+In the "Search"-tab of the app you can search for certain exercises using keywords like biceps, triceps or back for example. Exercises containing the keyword will then be displayed on the screen as cards and you can then click the cards to open a more detailed view of the selected exercise.
 
 ### This Readme will keep updating as the development progresses
