@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, ScrollView, FlatList, Image } from 'react-native'
-import { Button, Card, Divider, Searchbar } from 'react-native-paper'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native'
+import { Button, Card, Searchbar } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
-import { options } from '../../utils'
+import { API_URL, API_OPTIONS } from '../../utils'
+
 
 const SearchScreen = () => {
   const [query, setQuery] = useState('')
@@ -10,7 +11,7 @@ const SearchScreen = () => {
   const [limit, setLimit] = useState(10);
 
   useEffect(() => {
-    fetch('https://exercisedb.p.rapidapi.com/exercises/', options)
+    fetch(`${API_URL}`, API_OPTIONS)
       .then(response => response.json())
       .then(response => {
         setExercises(response)
@@ -31,13 +32,13 @@ const SearchScreen = () => {
 
   const renderItem = ({ item }) => {
     return (
-      <Card style={styles.cardContainer}>
-        <Card.Content>
-          <Text style={styles.cardText}>Name: {item.name}</Text>
-          <Text style={styles.cardText}>Target: {item.target}</Text>
-          <Text style={styles.cardText}>Equipment: {item.equipment}</Text>
-        </Card.Content>
-      </Card>
+      <TouchableOpacity>
+        <Card style={styles.cardContainer}>
+          <Card.Content style={{ alignItems: 'center' }}>
+            <Text style={styles.cardText}>{item.name}</Text>
+          </Card.Content>
+        </Card>
+      </TouchableOpacity>
     )
   }
 
@@ -56,10 +57,8 @@ const SearchScreen = () => {
         initialNumToRender={5}
         onEndReached={LoadMore}
         onEndReachedThreshold={0.3}
+        style={styles.flatList}
       />
-      {filteredExercises.length > limit && (
-        <Button mode='contained' title='Load More' onPress={LoadMore} />
-      )}
     </View>
   )
 }
@@ -68,23 +67,19 @@ export default SearchScreen
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center'
   },
   cardText: {
-    fontWeight: 'bold'
-  },
-  dippaContainer: {
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    paddingBottom: 40
+    fontSize: 18
   },
   cardContainer: {
     marginVertical: 8,
     marginHorizontal: 16,
     flex: 1
+  },
+  flatList: {
+    marginBottom: 10
   }
 })

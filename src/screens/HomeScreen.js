@@ -1,9 +1,9 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button, Text, Card } from 'react-native-paper';
-import ExerciseCard from '../components/AddExercises/ExerciseCard';
+import AddActivity from '../components/AddExercises/AddActivity';
 import { auth, database } from '../../firebaseConfig';
-import { child, onValue, ref, remove, } from 'firebase/database';
+import { onValue, ref, remove, } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 
 
@@ -33,23 +33,23 @@ const HomeScreen = ({ navigation }) => {
     })
   }, []);
 
-  const deleteActivity = () => {
+  /*const deleteActivity = () => {
     const userId = auth.currentUser.uid;
     remove(
       ref(database, `users/${userId}/activities/`),
       )
-    }
+    }*/
 
   const renderItem = ({ item }) => {
     return (
-    <Card mode="contained" style={styles.cardContainer}>
-      <Card.Content>
-        <Text>{item.activityName}</Text>
-        <Text>{item.duration}</Text>
-        <Text>{item.date}</Text>
-        <Button onPress={deleteActivity}>Delete</Button>
-      </Card.Content>
-    </Card>
+      <Card mode="contained" style={styles.cardContainer}>
+        <Card.Content style={{alignItems:'center'}}>
+          <Text>{item.activityName}</Text>
+          <Text>{item.duration}</Text>
+          <Text>{item.date}</Text>
+          <Button>Delete</Button>
+        </Card.Content>
+      </Card>
     )
   }
 
@@ -61,16 +61,15 @@ const HomeScreen = ({ navigation }) => {
         <Button mode="contained" onPress={handleSignOut}>Sign Out</Button>
       </View>
       {showModal && (
-        <ExerciseCard
-         isModalVisible={isModalVisible}
-         showModal={showModal}
-         />
+        <AddActivity
+          isModalVisible={isModalVisible}
+          showModal={showModal}
+        />
       )}
       <FlatList
         data={activities}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        ItemSeparatorComponent={() => <View syle={{height: 10}} />}
       />
     </View>
   );
@@ -83,8 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    padding: 10
+    justifyContent: 'space-around',
   },
   flatListContainer: {
     justifyContent: 'space-around',

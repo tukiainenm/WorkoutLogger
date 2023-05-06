@@ -1,25 +1,8 @@
 import React, { useState } from 'react'
-import { Card, Button, TextInput, Text } from 'react-native-paper'
+import { TextInput, Text } from 'react-native-paper'
 import { StyleSheet, View, Modal, TouchableOpacity } from 'react-native'
-import { auth, database } from '../../../firebaseConfig'
-import { ref, push, set } from 'firebase/database'
 
-
-const ExerciseCard = ({ showModal, isModalVisible }) => {
-    const [activityName, setActivityName] = useState('')
-    const [duration, setDuration] = useState('')
-    const [date, setDate] = useState('')
-
-    const userId = auth.currentUser.uid;
-
-    const saveActivity = () => {
-        push(
-            ref(database, `users/${userId}/activities`),
-            { activityName, duration, date })
-        showModal();
-    }
-
-
+const ActivityModal = ({ isModalVisible, showModal, activityName, duration, date, setActivityName, setDuration, setDate, saveActivity }) => {
     return (
         <View style={styles.container}>
             <Modal visible={isModalVisible} transparent={true} animationType='fade'>
@@ -36,7 +19,6 @@ const ExerciseCard = ({ showModal, isModalVisible }) => {
                             value={duration}
                             onChangeText={text => setDuration(text)}
                             style={styles.textInput}
-
                         />
                         <TextInput
                             placeholder="Date"
@@ -57,7 +39,7 @@ const ExerciseCard = ({ showModal, isModalVisible }) => {
     )
 }
 
-export default ExerciseCard
+export default ActivityModal
 
 const styles = StyleSheet.create({
     container: {

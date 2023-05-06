@@ -1,26 +1,17 @@
-import {
-  NavigationContainer,
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme
-}
-  from '@react-navigation/native';
-import { MD2DarkTheme, MD2LightTheme } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import merge from 'deepmerge'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import { Provider as PaperProvider } from 'react-native-paper';
-import CustomNavigationBar from './src/components/CustomNavigationBar'
+import CustomNavigationBar from './src/components/Navigation/CustomNavigationBar'
 
 const Stack = createNativeStackNavigator();
-const CombinedDefaultTheme = merge(MD2LightTheme, NavigationDefaultTheme);
-export const CombinedDarkTheme = merge(MD2DarkTheme, NavigationDarkTheme);
 
 export default function App() {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login"
