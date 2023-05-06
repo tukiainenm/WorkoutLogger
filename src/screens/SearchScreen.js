@@ -9,6 +9,7 @@ const SearchScreen = () => {
   const [exercises, setExercises] = useState([])
   const [filteredExercises, setFilteredExercises] = useState([])
   const [limit, setLimit] = useState(10);
+  const [showDetails, setShowDetails] = useState(false)
 
   useEffect(() => {
     fetch(`${API_URL}`, API_OPTIONS)
@@ -26,13 +27,17 @@ const SearchScreen = () => {
     setFilteredExercises(filteredData);
   }
 
-  const LoadMore = () => {
+  const loadMore = () => {
     setLimit(limit + 5)
+  }
+
+  const openDetails = () => {
+    setShowDetails(!showDetails)
   }
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={openDetails}>
         <Card style={styles.cardContainer}>
           <Card.Content style={{ alignItems: 'center' }}>
             <Text style={styles.cardText}>{item.name}</Text>
@@ -49,13 +54,19 @@ const SearchScreen = () => {
         onChangeText={text => setQuery(text)}
         value={query}
         onIconPress={searchExercises}
+        onSubmitEditing={searchExercises}
       />
+      {showDetails && (
+        <Modal transparent={true} >
+          <Text>Ju</Text>
+        </Modal>
+      )}
       <FlatList
         data={filteredExercises.slice(0, limit)}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         initialNumToRender={5}
-        onEndReached={LoadMore}
+        onEndReached={loadMore}
         onEndReachedThreshold={0.3}
         style={styles.flatList}
       />
