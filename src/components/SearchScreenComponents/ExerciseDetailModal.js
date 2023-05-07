@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, Modal, Image } from 'react-native'
+import { Button } from 'react-native-paper'
 
 import React from 'react'
 
-const SearchDetailModal = ({ isDetailModalVisible, selectedExercise, hideDetailModal }) => {
+const ExerciseDetailModal = ({ isDetailModalVisible, selectedExercise, hideDetailModal }) => {
     return (
         <View style={styles.container}>
             <Modal visible={isDetailModalVisible} transparent={true} animationType='fade'>
@@ -18,9 +19,9 @@ const SearchDetailModal = ({ isDetailModalVisible, selectedExercise, hideDetailM
                                 </View>
                             </>
                         )}
-                        <TouchableOpacity onPress={hideDetailModal}>
-                            <Text>Close</Text>
-                        </TouchableOpacity>
+                        <Button style={styles.button} mode='contained' compact={true} onPress={hideDetailModal}>
+                            Close
+                        </Button>
                     </View>
                 </View>
             </Modal>
@@ -28,7 +29,7 @@ const SearchDetailModal = ({ isDetailModalVisible, selectedExercise, hideDetailM
     )
 }
 
-export default SearchDetailModal
+export default ExerciseDetailModal
 
 const styles = StyleSheet.create({
     container: {
@@ -66,7 +67,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     gif: {
-        width: '80%',
-        height: '80%',
+        width: '85%',
+        height: '85%',
     },
+    button: {
+        marginLeft: 230
+    }
 });

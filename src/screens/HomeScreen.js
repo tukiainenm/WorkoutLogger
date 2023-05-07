@@ -1,8 +1,9 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button, Text, Card } from 'react-native-paper';
-import AddActivity from '../components/AddExercises/AddActivity';
-import { auth, database } from '../../firebaseConfig';
+import AddActivity from '../components/HomeScreenComponents/AddActivity';
+import ActivityCard from '../components/HomeScreenComponents/ActivityCard';
+import { auth, database } from '../../firebaseConfig'
 import { onValue, ref, remove, } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 
@@ -31,7 +32,6 @@ const HomeScreen = ({ navigation }) => {
         return { id: key, ...value };
       });
       setActivities(activities);
-      console.log(activities)
     });
   }, []);
 
@@ -46,19 +46,10 @@ const HomeScreen = ({ navigation }) => {
     };
 
     return (
-      <Card mode="elevated" style={styles.cardContainer}>
-        <Card.Title title={item.activityName} />
-        <Card.Content style={{ alignItems: 'center' }}>
-          <Text style={styles.cardText}>{item.duration}</Text>
-          <Text style={styles.cardText}>{item.date}</Text>
-          <Button
-            compact={true}
-            mode='outlined'
-            style={styles.button}
-            onPress={handleDelete}
-          >Delete</Button>
-        </Card.Content>
-      </Card>
+      <ActivityCard
+      item={item}
+      handleDelete={handleDelete}
+      />
     )
   }
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { TextInput, Text, Button } from 'react-native-paper'
-import { StyleSheet, View, Modal, TouchableOpacity } from 'react-native'
+import { TextInput, Button } from 'react-native-paper'
+import { StyleSheet, View, Modal } from 'react-native'
 
 const ActivityModal = ({ isModalVisible, showModal, activityName, duration, date, setActivityName, setDuration, setDate, saveActivity }) => {
     return (
@@ -28,10 +28,10 @@ const ActivityModal = ({ isModalVisible, showModal, activityName, duration, date
                         />
                         <View style={styles.buttonContainer}>
                             <Button style={styles.button} mode='contained' compact={true} onPress={showModal}>
-                                <Text>Close</Text>
+                                Close
                             </Button>
-                            <Button style={styles.button} mode='contained' compact={true} onPress={saveActivity} >
-                                <Text>Save</Text>
+                            <Button style={styles.button} mode='contained' compact={true} onPress={saveActivity}>
+                                Save
                             </Button>
                         </View>
                     </View>

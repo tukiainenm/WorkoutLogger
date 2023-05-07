@@ -5,7 +5,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import React, { useState } from 'react'
 import { Provider as PaperProvider } from 'react-native-paper';
-import CustomNavigationBar from './src/components/Navigation/CustomNavigationBar'
+import CustomNavigationBar from './src/components/NavigationComponents/CustomNavigationBar'
 
 const Stack = createNativeStackNavigator();
 

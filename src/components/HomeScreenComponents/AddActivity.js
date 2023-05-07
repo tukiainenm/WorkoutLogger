@@ -18,20 +18,8 @@ const AddActivity = ({ showModal, isModalVisible }) => {
             duration,
             date,
         });
-        const activityId = activityRef.key;
         showModal();
     };
-
-    const deleteActivity = (activityId) => {
-    const activityPath = `users/${userId}/activities/${activityId}`;
-    remove(ref(database, activityPath))
-      .then(() => {
-      })
-      .catch((error) => {
-      });
-  };
-
-
 
     return (
         <View style={styles.container}>

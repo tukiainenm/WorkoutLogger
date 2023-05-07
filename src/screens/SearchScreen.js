@@ -2,7 +2,8 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { Card, Searchbar } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
 import { API_URL, API_OPTIONS } from '../../utils'
-import SearchDetailModal from '../components/SearchExercises/SearchDetailModal'
+import ExerciseDetailModal from '../components/SearchScreenComponents/ExerciseDetailModal'
+import ExerciseCard from '../components/SearchScreenComponents/ExerciseCard'
 
 
 const SearchScreen = () => {
@@ -11,7 +12,6 @@ const SearchScreen = () => {
   const [filteredExercises, setFilteredExercises] = useState([])
   const [limit, setLimit] = useState(12);
   const [selectedExercise, setSelectedExercise] = useState(null);
-  const [endReached, setEndReached] = useState(false)
 
   useEffect(() => {
     fetch(`${API_URL}`, API_OPTIONS)
@@ -37,16 +37,12 @@ const SearchScreen = () => {
     setSelectedExercise(null);
   };
 
-
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => showDetailModal(item)}>
-        <Card style={styles.cardContainer}>
-          <Card.Content style={{ alignItems: 'center' }}>
-            <Text style={styles.cardText}>{item.name}</Text>
-          </Card.Content>
-        </Card>
-      </TouchableOpacity>
+      <ExerciseCard
+      item={item}
+      showDetailModal={showDetailModal}
+      />
     )
   }
 
@@ -60,7 +56,7 @@ const SearchScreen = () => {
         onSubmitEditing={searchExercises}
       />
       {showDetailModal && (
-        <SearchDetailModal
+        <ExerciseDetailModal
           isDetailModalVisible={!!selectedExercise}
           selectedExercise={selectedExercise}
           hideDetailModal={hideDetailModal}
@@ -84,14 +80,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  cardText: {
-    fontSize: 18
-  },
-  cardContainer: {
-    marginVertical: 8,
-    marginHorizontal: 16,
-    flex: 1
   },
   flatList: {
     marginBottom: 25
