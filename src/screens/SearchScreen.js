@@ -24,13 +24,9 @@ const SearchScreen = () => {
 
   const searchExercises = () => {
     const filteredData = exercises.filter(item =>
-      item.target.toLowerCase().includes(query.toLowerCase()) 
+      item.target.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredExercises(filteredData);
-  }
-
-  const loadMore = () => {
-    setLimit(limit + 5)
   }
 
   const showDetailModal = (item) => {
@@ -41,7 +37,7 @@ const SearchScreen = () => {
     setSelectedExercise(null);
   };
 
-  
+
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => showDetailModal(item)}>
@@ -53,7 +49,7 @@ const SearchScreen = () => {
       </TouchableOpacity>
     )
   }
-  
+
   return (
     <View style={styles.container}>
       <Searchbar
@@ -65,9 +61,9 @@ const SearchScreen = () => {
       />
       {showDetailModal && (
         <SearchDetailModal
-        isDetailModalVisible={!!selectedExercise}
-        selectedExercise={selectedExercise}
-        hideDetailModal={hideDetailModal}
+          isDetailModalVisible={!!selectedExercise}
+          selectedExercise={selectedExercise}
+          hideDetailModal={hideDetailModal}
         />
       )}
       <FlatList
@@ -75,8 +71,6 @@ const SearchScreen = () => {
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
         initialNumToRender={limit}
-        onEndReached={!setEndReached}
-        onEndReachedThreshold={0.5}
         style={styles.flatList}
       />
     </View>

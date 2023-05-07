@@ -1,5 +1,5 @@
 import { Button, TextInput, Text } from 'react-native-paper';
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
@@ -38,8 +38,10 @@ const LoginScreen = ({ navigation }) => {
     return (
         <KeyboardAvoidingView
             style={styles.container}
-            behavior='height'
         >
+            <View style={styles.imageContainer}>
+                <Image style={styles.image} source={require('../../assets/barbell.webp')} />
+            </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     inputContainer: {
         width: '80%'
@@ -97,10 +99,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 10,
     },
     button: {
         marginHorizontal: 10,
         width: 100
+    },
+    image: {
+        width: '50%',
+        height: '50%'
+    },
+    imageContainer: {
+        width: '100%',
+        height: 185,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
