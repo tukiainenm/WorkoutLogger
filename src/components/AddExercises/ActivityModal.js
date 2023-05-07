@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextInput, Text } from 'react-native-paper'
+import { TextInput, Text, Button } from 'react-native-paper'
 import { StyleSheet, View, Modal, TouchableOpacity } from 'react-native'
 
 const ActivityModal = ({ isModalVisible, showModal, activityName, duration, date, setActivityName, setDuration, setDate, saveActivity }) => {
@@ -26,12 +26,14 @@ const ActivityModal = ({ isModalVisible, showModal, activityName, duration, date
                             onChangeText={text => setDate(text)}
                             style={styles.textInput}
                         />
-                        <TouchableOpacity onPress={showModal}>
-                            <Text>Close</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={saveActivity} >
-                            <Text>Save</Text>
-                        </TouchableOpacity>
+                        <View style={styles.buttonContainer}>
+                            <Button style={styles.button} mode='contained' compact={true} onPress={showModal}>
+                                <Text>Close</Text>
+                            </Button>
+                            <Button style={styles.button} mode='contained' compact={true} onPress={saveActivity} >
+                                <Text>Save</Text>
+                            </Button>
+                        </View>
                     </View>
                 </View>
             </Modal>
@@ -52,6 +54,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        marginLeft: 180,
+        justifyContent: 'space-evenly'
+    },
+    button: {
+        marginHorizontal: 10,
+        width: 55
     },
     card: {
         width: '80%',

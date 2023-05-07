@@ -13,11 +13,25 @@ const AddActivity = ({ showModal, isModalVisible }) => {
     const userId = auth.currentUser.uid;
 
     const saveActivity = () => {
-        push(
-            ref(database, `users/${userId}/activities`),
-            { activityName, duration, date })
+        const activityRef = push(ref(database, `users/${userId}/activities`), {
+            activityName,
+            duration,
+            date,
+        });
+        const activityId = activityRef.key;
         showModal();
-    }
+    };
+
+    const deleteActivity = (activityId) => {
+    const activityPath = `users/${userId}/activities/${activityId}`;
+    remove(ref(database, activityPath))
+      .then(() => {
+      })
+      .catch((error) => {
+      });
+  };
+
+
 
     return (
         <View style={styles.container}>

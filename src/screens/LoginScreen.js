@@ -56,15 +56,18 @@ const LoginScreen = ({ navigation }) => {
             <View style={styles.buttonContainer}>
                 <Button
                     mode='contained'
-                    onPress={handleLogin}
-                >
-                    <Text>Login</Text>
-                </Button>
-                <Button
-                    mode='contained'
+                    style={styles.button}
                     onPress={handleSignUp}
                 >
                     <Text>Sign Up</Text>
+                </Button>
+
+                <Button
+                    mode='contained'
+                    style={styles.button}
+                    onPress={handleLogin}
+                >
+                    <Text>Login</Text>
                 </Button>
             </View>
         </KeyboardAvoidingView>
@@ -91,31 +94,13 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         width: '60%',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 40,
+        marginTop: 20,
     },
     button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    buttonOutlineText: {
-        color: '#0782F9',
-        fontWeight: '700',
-        fontSize: 16,
+        marginHorizontal: 10,
+        width: 100
     },
 })

@@ -77,6 +77,5 @@ const styles = StyleSheet.create({
     gif: {
         width: '80%',
         height: '80%',
-        padding: 10
     },
 });

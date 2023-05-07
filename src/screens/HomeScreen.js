@@ -6,11 +6,10 @@ import { auth, database } from '../../firebaseConfig';
 import { onValue, ref, remove, } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 
-
 const HomeScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [activities, setActivities] = useState([])
-
+  const [activities, setActivities] = useState([]);
+  const userId = auth.currentUser.uid;
 
   const showModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -21,33 +20,43 @@ const HomeScreen = ({ navigation }) => {
       .then(() => {
         navigation.replace("Login")
       })
-      .catch(error => console.warn(error))
+      .catch(err => console.error(err))
   }
 
   useEffect(() => {
-    const userId = auth.currentUser.uid;
     const itemsRef = ref(database, `users/${userId}/activities`);
     onValue(itemsRef, (snapshot) => {
       const data = snapshot.val();
-      setActivities(Object.values(data));
-    })
+      const activities = Object.entries(data || {}).map(([key, value]) => {
+        return { id: key, ...value };
+      });
+      setActivities(activities);
+      console.log(activities)
+    });
   }, []);
 
-  /*const deleteActivity = () => {
-    const userId = auth.currentUser.uid;
-    remove(
-      ref(database, `users/${userId}/activities/`),
-      )
-    }*/
-
   const renderItem = ({ item }) => {
+    const handleDelete = async () => {
+      try {
+        const itemRef = ref(database, `users/${userId}/activities/${item.id}`);
+        await remove(itemRef)
+      } catch (error) {
+        console.error('Error deleting item:', error.message);
+      }
+    };
+
     return (
-      <Card mode="contained" style={styles.cardContainer}>
-        <Card.Content style={{alignItems:'center'}}>
-          <Text>{item.activityName}</Text>
-          <Text>{item.duration}</Text>
-          <Text>{item.date}</Text>
-          <Button>Delete</Button>
+      <Card mode="elevated" style={styles.cardContainer}>
+        <Card.Title title={item.activityName} />
+        <Card.Content style={{ alignItems: 'center' }}>
+          <Text style={styles.cardText}>{item.duration}</Text>
+          <Text style={styles.cardText}>{item.date}</Text>
+          <Button
+            compact={true}
+            mode='outlined'
+            style={styles.button}
+            onPress={handleDelete}
+          >Delete</Button>
         </Card.Content>
       </Card>
     )
@@ -66,12 +75,20 @@ const HomeScreen = ({ navigation }) => {
           showModal={showModal}
         />
       )}
-      <FlatList
-        data={activities}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        inverted={true}
-      />
+      {activities.length === 0 ? (
+        <View style={styles.fallBackContainer}>
+          <Text style={styles.fallBackText}>No activities found</Text>
+        </View>
+      ) : (
+        <View style={styles.flatListContainer}>
+          <FlatList
+            data={activities}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            inverted={true}
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -86,12 +103,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   flatListContainer: {
-    justifyContent: 'space-around',
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingBottom: 85
   },
   cardContainer: {
-    marginVertical: 8,
-    marginHorizontal: 16
+    marginVertical: 6,
+    marginHorizontal: 20,
+  },
+  cardText: {
+    fontSize: 15
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 250
+  },
+  fallBackText: {
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
+  fallBackContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 150
   }
 });
