@@ -59,15 +59,6 @@ const styles = StyleSheet.create({
         elevation: 15,
         backdropFilter: 'blur(10px)',
     },
-    textInput: {
-        width: '100%',
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 8,
-        marginBottom: 16,
-    },
     gifContainer: {
         width: '70%',
         height: 185,

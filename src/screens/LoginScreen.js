@@ -1,4 +1,4 @@
-import { Button, TextInput, Provider as PaperProvider, Text } from 'react-native-paper';
+import { Button, TextInput, Text } from 'react-native-paper';
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';

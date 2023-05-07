@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Image } from 'react-native'
-import { Card, Searchbar, Button } from 'react-native-paper'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { Card, Searchbar } from 'react-native-paper'
 import React, { useEffect, useState } from 'react'
 import { API_URL, API_OPTIONS } from '../../utils'
 import SearchDetailModal from '../components/SearchExercises/SearchDetailModal'
@@ -24,7 +24,7 @@ const SearchScreen = () => {
 
   const searchExercises = () => {
     const filteredData = exercises.filter(item =>
-      item.target.toLowerCase().includes(query.toLowerCase())
+      item.target.toLowerCase().includes(query.toLowerCase()) 
     );
     setFilteredExercises(filteredData);
   }

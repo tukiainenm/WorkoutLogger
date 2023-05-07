@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TextInput, Text, Button } from 'react-native-paper'
 import { StyleSheet, View, Modal, TouchableOpacity } from 'react-native'
 
