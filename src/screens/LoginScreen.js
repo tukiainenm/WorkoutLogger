@@ -1,8 +1,7 @@
-import { Button, TextInput, Text } from 'react-native-paper';
-import { KeyboardAvoidingView, StyleSheet, View, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import LoginForm from '../components/LoginScreenComponents/LoginForm';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -36,83 +35,15 @@ const LoginScreen = ({ navigation }) => {
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-        >
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../../assets/barbell.webp')} />
-            </View>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Email'
-                    onChangeText={text => setEmail(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder='Password'
-                    onChangeText={text => setPassword(text)}
-                    secureTextEntry
-                />
-            </View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    mode='contained'
-                    style={styles.button}
-                    onPress={handleSignUp}
-                >
-                    <Text>Sign Up</Text>
-                </Button>
-
-                <Button
-                    mode='contained'
-                    style={styles.button}
-                    onPress={handleLogin}
-                >
-                    <Text>Login</Text>
-                </Button>
-            </View>
-        </KeyboardAvoidingView>
+        <LoginForm
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            handleSignUp={handleSignUp}
+        />
     )
 }
 
-export default LoginScreen;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputContainer: {
-        width: '80%'
-    },
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
-    },
-    buttonContainer: {
-        width: '60%',
-        justifyContent: 'space-around',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    button: {
-        marginHorizontal: 10,
-        width: 100
-    },
-    image: {
-        width: '50%',
-        height: '50%'
-    },
-    imageContainer: {
-        width: '100%',
-        height: 185,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+export default LoginScreen
