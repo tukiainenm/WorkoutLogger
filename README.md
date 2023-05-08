@@ -19,4 +19,4 @@ On the app's homepage you can log activities you've completed. The "Add Activity
 In the "Search"-tab of the app you can search for certain exercises using keywords like biceps, triceps or back for example. Exercises containing the keyword will then be displayed on the screen as cards and you can then click the cards to open a more detailed view of the selected exercise.
 
 ## Testing
-You can try out the app here: [Expo.dev](https://expo.dev/@tukiainenm/WorkoutLogger)
+Download the [Expo Go-app](https://expo.dev/client) from Google Play or App Store, and then you can try out the app here by scanning the qr code: [Expo.dev](https://expo.dev/@tukiainenm/WorkoutLogger)
