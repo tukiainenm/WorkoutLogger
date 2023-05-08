@@ -9,6 +9,7 @@ An app to log your activities and search for instructions on how to do different
 - [ExerciseDB API](https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb)
 - [Firebase Auth](https://firebase.google.com/docs/auth)
 - [Firebase Realtime Database](https://firebase.google.com/docs/database)
+- [React Native Paper](https://reactnativepaper.com/)
 
 ## Overview
 Opening the app you are greeted with a "Login"-page, from where you can login to an existing account, or sign up as a new user. The authentication is built with [Firebase Auth](https://firebase.google.com/docs/auth).
