@@ -2,7 +2,7 @@ import React from 'react'
 import { Appbar } from 'react-native-paper';
 import { getHeaderTitle } from '@react-navigation/elements'
 
-const CustomNavigationBar = ({ navigation, route, options }) => {
+const TopNavBar = ({ navigation, route, options }) => {
     const title = getHeaderTitle(options, route.name)
     const showBackButton = route.name !== "Login" && route.name !== "WorkoutLogger";
 
@@ -16,4 +16,4 @@ const CustomNavigationBar = ({ navigation, route, options }) => {
     );
 }
 
-export default CustomNavigationBar
+export default TopNavBar
